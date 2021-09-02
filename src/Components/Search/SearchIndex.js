@@ -4,44 +4,50 @@ import {Input} from 'reactstrap';
 export default class SearchIndex extends Component{
   constructor(props){
     super(props);
-    
-      // ['pen', 'marker', 'eraser', 'notebook', 'pencil', 'scissors', 'highlighter', 'stapler', 'paper clip', 'binder', 'hole punch', 'laminator', 'laminating sheets', 'protective sheets', 'index cards'],
-    
-    this.state = {term : ''}
-    this.state = {things: ['pen', 'marker', 'eraser', 'notebook', 'pencil', 'scissors', 'highlighter', 'stapler', 'paper clip', 'binder', 'hole punch', 'laminator', 'laminating sheets', 'protective sheets', 'index cards']}
-    this.state = {filteredThings: ""}
+
+    this.state = {term: '',
+     things: ['pen', 'marker', 'eraser', 'notebook', 'pencil', 'scissors', 'highlighter', 'stapler', 
+     'paper clip', 'binder', 'hole punch', 'laminator', 'laminating sheets', 'protective sheets', 'index cards'],
+    filteredThings: []}
+
     this.searchFunction=this.searchFunction.bind(this)
     this.handleSearchTerm=this.handleSearchTerm.bind(this)
   }
-  
+
   searchFunction(){
     console.log(this.state.term)
-    console.log(this.state.things)
-    const result = this.state.things.filter(thing=>thing.includes(this.state.term))
-    this.setState({filteredThings:result})
+
+    var thingslist = this.state.things
+    thingslist = thingslist.filter(e => e.includes(this.state.term))
+    this.setState({filteredThings: thingslist})
+    console.log(this.state.filteredThings)
   }
 
   handleSearchTerm(e){
-    console.log(this.state.term)
-    console.log(this.state.filteredThings)
-    console.log(this.state.things)
-    this.setState({term : e.target.value})
-    this.setState({things : ['pen', 'marker', 'eraser', 'notebook', 'pencil', 'scissors', 'highlighter', 'stapler', 'paper clip', 'binder', 'hole punch', 'laminator', 'laminating sheets', 'protective sheets', 'index cards']})
-  }
+
+    this.setState({
+      term : e.target.value
+    })
+
+}
   
   render() {
     return(
       <div>
           <Input placeholder='Search Here' name="text" onChange={(e) => { this.handleSearchTerm(e) }}/>
+          <br/>
           <button type="submit" onClick={()=>this.searchFunction()}>Search</button>
-          
-       {/* <h3>Results:
-        {this.state.things.map(thing => (
-          <li>
-            {thing}
-          </li>
-        ))}
-      </h3> */}
+        <br/>
+        <hr/>
+       <h3>Results:</h3> 
+       <ul><center>
+         <table style={{"borderWidth":"4px", 'borderColor':"#aaaaaa", 'borderStyle':'solid'}}>
+          {this.state.filteredThings.map((thing) => {
+              return <tr><td><li>{ thing }</li></td></tr>
+          })}
+          </table>
+          </center>
+        </ul>
       
 
     </div>
